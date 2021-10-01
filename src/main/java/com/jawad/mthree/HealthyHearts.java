@@ -1,6 +1,6 @@
-package main.java;
+package com.jawad.mthree;
 
-public class DogGenetics {
+public class HealthyHearts {
 
     public static void main(String[] args) {
 

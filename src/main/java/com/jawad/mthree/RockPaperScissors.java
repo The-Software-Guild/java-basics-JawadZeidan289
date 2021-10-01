@@ -1,4 +1,4 @@
-package main.java;
+package com.jawad.mthree;
 
 import java.util.Random;
 import java.util.Scanner;

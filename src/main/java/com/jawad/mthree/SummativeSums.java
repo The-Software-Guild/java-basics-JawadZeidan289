@@ -1,6 +1,6 @@
-package main.java;
+package com.jawad.mthree;
 
-public class HealthyHearts {
+public class SummativeSums {
 
     public static void main(String[] args) {
 
