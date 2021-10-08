@@ -4,16 +4,14 @@ import java.util.List;
 
 public interface DvdLibraryDao {
 
-    Dvd addDvd() throws DvdLibraryDaoException;
+    Dvd addDvd(String title, Dvd dvd) throws DvdLibraryDaoException;
 
-    Dvd removeDvd() throws DvdLibraryDaoException;
+    Dvd removeDvd(String title) throws DvdLibraryDaoException;
 
-    Dvd editDvd() throws DvdLibraryDaoException;
+    Dvd editDvd(String title) throws DvdLibraryDaoException;
 
     List<Dvd> listAllDvds() throws DvdLibraryDaoException;
 
-    Dvd listSingleDvd() throws DvdLibraryDaoException;
-
-    Dvd searchForDvd() throws DvdLibraryDaoException;
+    Dvd listSingleDvd(String title) throws DvdLibraryDaoException;
 
 }

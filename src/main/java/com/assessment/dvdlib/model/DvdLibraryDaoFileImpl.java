@@ -11,32 +11,22 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
     public static final String DELIMITER = "::";
 
     @Override
-    public Dvd addDvd() {
-        return null;
+    public Dvd addDvd(String title, Dvd dvd) throws DvdLibraryDaoException {
+        Dvd oldDvd = dvds.put(title, dvd);
+        return oldDvd;
     }
 
     @Override
-    public Dvd removeDvd() {
-        return null;
+    public Dvd removeDvd(String title) throws DvdLibraryDaoException { return null; }
+
+    @Override
+    public Dvd editDvd(String title) throws DvdLibraryDaoException { return null; }
+
+    @Override
+    public List<Dvd> listAllDvds() throws DvdLibraryDaoException {
+        return new ArrayList<>(dvds.values());
     }
 
     @Override
-    public Dvd editDvd() {
-        return null;
-    }
-
-    @Override
-    public List<Dvd> listAllDvds() {
-        return null;
-    }
-
-    @Override
-    public Dvd listSingleDvd() {
-        return null;
-    }
-
-    @Override
-    public Dvd searchForDvd() {
-        return null;
-    }
+    public Dvd listSingleDvd(String title) throws DvdLibraryDaoException { return null; }
 }
