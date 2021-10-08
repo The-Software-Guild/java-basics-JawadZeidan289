@@ -41,14 +41,22 @@ public class DvdLibraryView {
     public void showAllDvds(List<Dvd> list) {
         if(list.isEmpty()) { io.print("No DVD records"); } else {
             for(Dvd d : list) {
-                io.print("Title: " + d.getTitle() + " - " +
-                        "Release date: " + d.getReleaseDate() + " - " +
-                        "MPAA Rating: " + d.getMpaaRating() + " - " +
-                        "Director: " + d.getDirectorName() + " - " +
-                        "Studio: " + d.getStudio() + " - " + d.getUserRating() + " - " +
-                        "Note: " + d.getSideNote());
+                printDvdDetails(d);
             }
         }
+    }
+
+    public void printDvdDetails(Dvd dvd) {
+        io.print("Title: " + dvd.getTitle() + " - " +
+                "Release date: " + dvd.getReleaseDate() + " - " +
+                "MPAA Rating: " + dvd.getMpaaRating() + " - " +
+                "Director: " + dvd.getDirectorName() + " - " +
+                "Studio: " + dvd.getStudio() + " - " + dvd.getUserRating() + " - " +
+                "Note: " + dvd.getSideNote());
+    }
+
+    public String getDvdTitle() {
+        return io.readString("Please enter DVD title");
     }
 
     public void printGoodbyeMessage() {
@@ -78,5 +86,9 @@ public class DvdLibraryView {
     public void displayErrorMessage(String msg) {
         io.print("=== ERROR ===");
         io.print(msg);
+    }
+
+    public void displayRemovalSuccessMessage() {
+        io.print("DVD Removed Successfully!");
     }
 }

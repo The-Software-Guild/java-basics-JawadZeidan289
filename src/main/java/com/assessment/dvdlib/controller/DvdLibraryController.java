@@ -69,21 +69,27 @@ public class DvdLibraryController {
         dao.addDvd(newDvd.getTitle(), newDvd);
     }
 
-    public void removeDvd() {
+    public void removeDvd() throws DvdLibraryDaoException  {
         view.displayRemoveDvdBanner();
+        String title = view.getDvdTitle();
+        dao.removeDvd(title);
+        view.displayRemovalSuccessMessage();
     }
 
     public void editDvd() {
         view.displayEditDvdBanner();
     }
 
-    public void listDvds() throws DvdLibraryDaoException{
+    public void listDvds() throws DvdLibraryDaoException {
         view.displayListDvdsBanner();
         List<Dvd> list = dao.listAllDvds();
         view.showAllDvds(list);
     }
 
-    public void searchForDvd() {
+    public void searchForDvd() throws DvdLibraryDaoException {
         view.displaySearchDvdBanner();
+        String title = view.getDvdTitle();
+        Dvd dvd = dao.listSingleDvd(title);
+        view.printDvdDetails(dvd);
     }
 }
