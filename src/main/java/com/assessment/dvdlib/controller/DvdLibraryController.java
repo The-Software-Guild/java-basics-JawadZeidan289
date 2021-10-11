@@ -76,8 +76,52 @@ public class DvdLibraryController {
         view.displayRemovalSuccessMessage();
     }
 
-    public void editDvd() {
+    public void editDvd() throws DvdLibraryDaoException {
         view.displayEditDvdBanner();
+        String title = view.getDvdTitle();
+        Dvd dvd = dao.listSingleDvd(title);
+        if(dvd != null) {
+            view.printDvdDetails(dvd);
+        } else {
+            view.displayNoRecordMessage();
+            return;
+        }
+        int option = view.printEditMenuAndGetInput();
+        switch(option) {
+            case 1:
+                // change release date
+                Dvd newDvdDate = view.editReleaseDate(dvd);
+                dao.editDvd(newDvdDate.getTitle(), newDvdDate);
+                break;
+            case 2:
+                // change MPAA Rating
+                Dvd newDvdMPAA = view.editMPAA(dvd);
+                dao.editDvd(newDvdMPAA.getTitle(), newDvdMPAA);
+                break;
+            case 3:
+                // change Director
+                Dvd newDvdDirector = view.editDirector(dvd);
+                dao.editDvd(newDvdDirector.getTitle(), newDvdDirector);
+                break;
+            case 4:
+                // change Studio
+                Dvd newDvdStudio = view.editStudio(dvd);
+                dao.editDvd(newDvdStudio.getTitle(), newDvdStudio);
+                break;
+            case 5:
+                // change User Rating
+                Dvd newDvdRating = view.editUserRating(dvd);
+                dao.editDvd(newDvdRating.getTitle(), newDvdRating);
+                break;
+            case 6:
+                // change Note
+                Dvd newDvdNote = view.editNote(dvd);
+                dao.editDvd(newDvdNote.getTitle(), newDvdNote);
+                break;
+            case 7:
+                // go back
+                return;
+        }
     }
 
     public void listDvds() throws DvdLibraryDaoException {
@@ -90,6 +134,10 @@ public class DvdLibraryController {
         view.displaySearchDvdBanner();
         String title = view.getDvdTitle();
         Dvd dvd = dao.listSingleDvd(title);
-        view.printDvdDetails(dvd);
+        if(dvd != null) {
+            view.printDvdDetails(dvd);
+        } else {
+            view.displayNoRecordMessage();
+        }
     }
 }

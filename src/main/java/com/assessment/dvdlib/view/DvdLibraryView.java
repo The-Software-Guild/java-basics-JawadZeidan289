@@ -51,8 +51,71 @@ public class DvdLibraryView {
                 "Release date: " + dvd.getReleaseDate() + " - " +
                 "MPAA Rating: " + dvd.getMpaaRating() + " - " +
                 "Director: " + dvd.getDirectorName() + " - " +
-                "Studio: " + dvd.getStudio() + " - " + dvd.getUserRating() + " - " +
+                "Studio: " + dvd.getStudio() + " - " +
+                "User Rating: " + dvd.getUserRating() + " - " +
                 "Note: " + dvd.getSideNote());
+    }
+
+    public int printEditMenuAndGetInput() {
+        io.print("");
+        io.print("1. Release Date");
+        io.print("2. MPAA Rating");
+        io.print("3. Director");
+        io.print("4. Studio");
+        io.print("5. User Rating");
+        io.print("6. Note");
+        io.print("7. Go Back");
+
+        return io.readInt("What would you like to edit?", 1,7);
+    }
+
+    public Dvd editReleaseDate(Dvd dvdToEdit) {
+        String newDate = io.readString("What would you like to change the release date to?");
+        Dvd newDvd = copyContentsOver(dvdToEdit);
+        newDvd.setReleaseDate(newDate);
+        return newDvd;
+    }
+
+    public Dvd editMPAA(Dvd dvdToEdit) {
+        String newMPAA = io.readString("What would you like to change the MPAA rating to?");
+        Dvd newDvd = copyContentsOver(dvdToEdit);
+        newDvd.setMpaaRating(newMPAA);
+        return newDvd;
+    }
+
+    public Dvd editDirector(Dvd dvdToEdit) {
+        String newDirector = io.readString("What would you like to change the director to?");
+        Dvd newDvd = copyContentsOver(dvdToEdit);
+        newDvd.setDirectorName(newDirector);
+        return newDvd;
+    }
+
+    public Dvd editStudio(Dvd dvdToEdit) {
+        String newStudio = io.readString("What would you like to change the studio to?");
+        Dvd newDvd = copyContentsOver(dvdToEdit);
+        newDvd.setStudio(newStudio);
+        return newDvd;
+    }
+
+    public Dvd editUserRating(Dvd dvdToEdit) {
+        int newRating = io.readInt("What would you like to change the user rating to?", 1, 5);
+        Dvd newDvd = copyContentsOver(dvdToEdit);
+        newDvd.setUserRating(newRating);
+        return newDvd;
+    }
+
+    public Dvd editNote(Dvd dvdToEdit) {
+        String newNote = io.readString("What would you like to change the side note to?");
+        Dvd newDvd = copyContentsOver(dvdToEdit);
+        newDvd.setSideNote(newNote);
+        return newDvd;
+    }
+
+    public Dvd copyContentsOver(Dvd original) {
+        Dvd newDvd = new Dvd(original.getTitle(), original.getReleaseDate(), original. getMpaaRating(),
+                original.getDirectorName(), original.getStudio(), original.getUserRating(),
+                original.getSideNote());
+        return newDvd;
     }
 
     public String getDvdTitle() {
@@ -86,6 +149,10 @@ public class DvdLibraryView {
     public void displayErrorMessage(String msg) {
         io.print("=== ERROR ===");
         io.print(msg);
+    }
+
+    public void displayNoRecordMessage() {
+        io.print("=== No such record ===");
     }
 
     public void displayRemovalSuccessMessage() {
