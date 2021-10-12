@@ -58,6 +58,7 @@ public class DvdLibraryView {
 
     public int printEditMenuAndGetInput() {
         io.print("");
+        io.print("Edit Menu");
         io.print("1. Release Date");
         io.print("2. MPAA Rating");
         io.print("3. Director");
@@ -157,5 +158,13 @@ public class DvdLibraryView {
 
     public void displayRemovalSuccessMessage() {
         io.print("DVD Removed Successfully!");
+    }
+
+    public void displayAddSuccessMessage() {
+        io.print("DVD Added Successfully!");
+    }
+
+    public void displayRecordAlreadyExistsMessage() {
+        io.print("=== DVD already exists ===");
     }
 }

@@ -1,5 +1,7 @@
 package com.assessment.dvdlib.model;
 
+import com.sg.classroster.dao.ClassRosterDaoException;
+
 import java.io.*;
 import java.util.*;
 
@@ -12,8 +14,10 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
 
     @Override
     public boolean addDvd(String title, Dvd dvd) throws DvdLibraryDaoException {
+        loadLibrary();
         if(dvds.get(title) == null) {
             Dvd oldDvd = dvds.put(title, dvd);
+            writeToFile();
             return true;
         } else {
             return false;
@@ -22,23 +26,101 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
 
     @Override
     public Dvd removeDvd(String title) throws DvdLibraryDaoException {
+        loadLibrary();
         Dvd removedDvd = dvds.remove(title);
+        writeToFile();
         return removedDvd;
     }
 
     @Override
     public Dvd editDvd(String title, Dvd newDvd) throws DvdLibraryDaoException {
+        loadLibrary();
         Dvd replacedDvd = dvds.replace(title, newDvd);
+        writeToFile();
         return replacedDvd;
     }
 
     @Override
     public List<Dvd> listAllDvds() throws DvdLibraryDaoException {
-        return new ArrayList<>(dvds.values());
+        loadLibrary();
+        return new ArrayList(dvds.values());
     }
 
     @Override
     public Dvd listSingleDvd(String title) throws DvdLibraryDaoException {
+        loadLibrary();
         return dvds.get(title);
+    }
+
+    private Dvd unmarshallDvd(String inputLine) {
+        // convert line from file into DVD object
+        String[] partitions = inputLine.split(DELIMITER);
+
+        String title = partitions[0];
+        String releaseDate = partitions[1];
+        String MPAA = partitions[2];
+        String director = partitions[3];
+        String studio = partitions[4];
+        int rating = Integer.parseInt(partitions[5]);
+        String sideNote = partitions[6];
+
+
+        Dvd newDvd = new Dvd(title, releaseDate, MPAA, director, studio, rating, sideNote);
+        return newDvd;
+    }
+
+    private String marshallDvd(Dvd dvdToConvert) {
+        // convert DVD object into string to save to file
+        return dvdToConvert.getTitle() + DELIMITER + dvdToConvert.getReleaseDate() + DELIMITER +
+                dvdToConvert.getMpaaRating() + DELIMITER + dvdToConvert.getDirectorName() + DELIMITER +
+                dvdToConvert.getStudio() + DELIMITER + dvdToConvert.getUserRating() + DELIMITER +
+                dvdToConvert.getSideNote();
+    }
+
+    private void loadLibrary() throws DvdLibraryDaoException {
+        Scanner scanner;
+
+        try {
+            // Create Scanner for reading the file
+            scanner = new Scanner(
+                    new BufferedReader(
+                            new FileReader(ROSTER_FILE)));
+        } catch (FileNotFoundException e) {
+            throw new DvdLibraryDaoException(
+                    "Could not load DVD library into memory.", e);
+        }
+
+        while(scanner.hasNext()) {
+            String line = scanner.next();
+
+            Dvd newDvd = unmarshallDvd(line);
+
+            dvds.put(newDvd.getTitle(), newDvd);
+
+        }
+        scanner.close();
+    }
+
+    private void writeToFile() throws DvdLibraryDaoException {
+        PrintWriter out;
+
+        try {
+            out = new PrintWriter(new FileWriter(ROSTER_FILE));
+        } catch (IOException e) {
+            throw new DvdLibraryDaoException(
+                    "Could not save DVD data.", e);
+        }
+
+        List<Dvd> dvds = listAllDvds();
+
+        for(Dvd d : dvds) {
+
+            String line = marshallDvd(d);
+
+            out.println(line);
+
+            out.flush();
+        }
+        out.close();
     }
 }

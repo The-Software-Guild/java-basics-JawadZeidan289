@@ -27,7 +27,6 @@ public class DvdLibraryController {
 
                 switch(menuSelection) {
                     case 1:
-                        //
                         addDvd();
                         break;
                     case 2:
@@ -66,14 +65,23 @@ public class DvdLibraryController {
     public void addDvd() throws DvdLibraryDaoException {
         view.displayAddDvdBanner();
         Dvd newDvd = view.getNewDvdInfo();
-        dao.addDvd(newDvd.getTitle(), newDvd);
+        boolean result = dao.addDvd(newDvd.getTitle(), newDvd);
+        if(result) {
+            view.displayAddSuccessMessage();
+        } else {
+            view.displayRecordAlreadyExistsMessage();
+        }
     }
 
     public void removeDvd() throws DvdLibraryDaoException  {
         view.displayRemoveDvdBanner();
         String title = view.getDvdTitle();
-        dao.removeDvd(title);
-        view.displayRemovalSuccessMessage();
+        Dvd removedDvd = dao.removeDvd(title);
+        if(removedDvd != null) {
+            view.displayRemovalSuccessMessage();
+        } else {
+            view.displayNoRecordMessage();
+        }
     }
 
     public void editDvd() throws DvdLibraryDaoException {
