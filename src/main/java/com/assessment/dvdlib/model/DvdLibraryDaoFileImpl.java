@@ -1,7 +1,5 @@
 package com.assessment.dvdlib.model;
 
-import com.sg.classroster.dao.ClassRosterDaoException;
-
 import java.io.*;
 import java.util.*;
 
@@ -16,7 +14,7 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
     public boolean addDvd(String title, Dvd dvd) throws DvdLibraryDaoException {
         loadLibrary();
         if(dvds.get(title) == null) {
-            Dvd oldDvd = dvds.put(title, dvd);
+            dvds.put(title, dvd);
             writeToFile();
             return true;
         } else {
@@ -56,6 +54,8 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
         // convert line from file into DVD object
         String[] partitions = inputLine.split(DELIMITER);
 
+        System.out.println(partitions.length);
+
         String title = partitions[0];
         String releaseDate = partitions[1];
         String MPAA = partitions[2];
@@ -71,10 +71,15 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
 
     private String marshallDvd(Dvd dvdToConvert) {
         // convert DVD object into string to save to file
-        return dvdToConvert.getTitle() + DELIMITER + dvdToConvert.getReleaseDate() + DELIMITER +
-                dvdToConvert.getMpaaRating() + DELIMITER + dvdToConvert.getDirectorName() + DELIMITER +
-                dvdToConvert.getStudio() + DELIMITER + dvdToConvert.getUserRating() + DELIMITER +
-                dvdToConvert.getSideNote();
+        String output = dvdToConvert.getTitle() + DELIMITER;
+        output+= dvdToConvert.getReleaseDate() + DELIMITER;
+        output+= dvdToConvert.getMpaaRating() + DELIMITER;
+        output+= dvdToConvert.getDirectorName() + DELIMITER;
+        output+= dvdToConvert.getStudio() + DELIMITER;
+        output+= dvdToConvert.getUserRating() + "" + DELIMITER;
+        output+= dvdToConvert.getSideNote();
+
+        return output;
     }
 
     private void loadLibrary() throws DvdLibraryDaoException {
@@ -90,8 +95,8 @@ public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
                     "Could not load DVD library into memory.", e);
         }
 
-        while(scanner.hasNext()) {
-            String line = scanner.next();
+        while(scanner.hasNextLine()) {
+            String line = scanner.nextLine();
 
             Dvd newDvd = unmarshallDvd(line);
 
