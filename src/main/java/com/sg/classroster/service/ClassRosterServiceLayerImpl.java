@@ -1,5 +1,6 @@
 package com.sg.classroster.service;
 
+import com.sg.classroster.dao.ClassRosterAuditDao;
 import com.sg.classroster.dao.ClassRosterDao;
 import com.sg.classroster.dao.ClassRosterPersistenceException;
 import com.sg.classroster.dto.Student;
@@ -9,9 +10,11 @@ import java.util.List;
 public class ClassRosterServiceLayerImpl implements ClassRosterServiceLayer {
 
     private final ClassRosterDao dao;
+    private ClassRosterAuditDao auditDao;
 
-    public ClassRosterServiceLayerImpl(ClassRosterDao dao) {
+    public ClassRosterServiceLayerImpl(ClassRosterDao dao, ClassRosterAuditDao auditDao) {
         this.dao = dao;
+        this.auditDao = auditDao;
     }
 
     @Override
@@ -32,6 +35,9 @@ public class ClassRosterServiceLayerImpl implements ClassRosterServiceLayer {
 
         // all good, add the student to the database
         dao.addStudent(student.getStudentId(), student);
+
+        // write to audit log
+        auditDao.writeAuditEntry("Student " + student.getStudentId() + " CREATED.");
     }
 
     private void validateStudentData(Student student) throws
@@ -70,6 +76,8 @@ public class ClassRosterServiceLayerImpl implements ClassRosterServiceLayer {
         if(returnedStudent == null) {
             throw new ClassRosterPersistenceException("No such Student with specified ID");
         } else {
+            // Write to audit log
+            auditDao.writeAuditEntry("Student " + studentId + " REMOVED.");
             return returnedStudent;
         }
     }
