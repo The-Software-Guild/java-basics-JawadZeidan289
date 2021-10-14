@@ -7,7 +7,7 @@ import java.util.*;
 
 public class ClassRosterDaoFileImpl implements ClassRosterDao {
 
-    private Map<String, Student> students = new HashMap<>();
+    private final Map<String, Student> students = new HashMap<>();
     public static final String ROSTER_FILE = "roster.txt";
     public static final String DELIMITER = "::";
 

@@ -9,8 +9,8 @@ import java.util.List;
 
 public class DvdLibraryController {
 
-    private DvdLibraryDao dao;
-    private DvdLibraryView view;
+    private final DvdLibraryDao dao;
+    private final DvdLibraryView view;
 
     public DvdLibraryController(DvdLibraryDao dao, DvdLibraryView view) {
         this.dao = dao;

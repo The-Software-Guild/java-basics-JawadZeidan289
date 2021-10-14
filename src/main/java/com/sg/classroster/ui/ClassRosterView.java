@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ClassRosterView {
 
-    private UserIO io;
+    private final UserIO io;
 
     public ClassRosterView(UserIO io) {
         this.io = io;

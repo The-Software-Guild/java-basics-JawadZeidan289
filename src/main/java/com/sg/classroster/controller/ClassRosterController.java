@@ -12,8 +12,8 @@ import java.util.List;
 
 public class ClassRosterController {
 
-    private ClassRosterView view;
-    private ClassRosterServiceLayer service;
+    private final ClassRosterView view;
+    private final ClassRosterServiceLayer service;
 
     public ClassRosterController(ClassRosterServiceLayer service, ClassRosterView view) {
         this.service = service;
@@ -63,7 +63,7 @@ public class ClassRosterController {
             view.displayStudent(student);
         } catch (ClassRosterPersistenceException e) {
             view.displayErrorMessage(e.getMessage());
-            System.out.println("");
+            System.out.println();
         }
     }
 
@@ -102,7 +102,7 @@ public class ClassRosterController {
             view.displayRemoveSuccessBanner();
         } catch (ClassRosterPersistenceException e) {
             view.displayErrorMessage(e.getMessage());
-            System.out.println("");
+            System.out.println();
         }
     }
 

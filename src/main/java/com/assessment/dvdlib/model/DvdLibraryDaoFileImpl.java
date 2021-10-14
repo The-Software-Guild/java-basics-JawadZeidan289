@@ -6,7 +6,7 @@ import java.util.*;
 public class DvdLibraryDaoFileImpl implements DvdLibraryDao {
 
     // entries are title,dvd pairs
-    private Map<String, Dvd> dvds = new HashMap<>();
+    private final Map<String, Dvd> dvds = new HashMap<>();
     public static final String ROSTER_FILE = "dvdcollection.txt";
     public static final String DELIMITER = "::";
 
