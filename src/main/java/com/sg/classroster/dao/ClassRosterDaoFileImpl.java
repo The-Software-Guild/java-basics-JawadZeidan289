@@ -8,8 +8,17 @@ import java.util.*;
 public class ClassRosterDaoFileImpl implements ClassRosterDao {
 
     private final Map<String, Student> students = new HashMap<>();
-    public static final String ROSTER_FILE = "roster.txt";
+    public final String ROSTER_FILE;
     public static final String DELIMITER = "::";
+
+    public ClassRosterDaoFileImpl() {
+        ROSTER_FILE= "roster.txt";
+    }
+
+    public ClassRosterDaoFileImpl(String rosterFileText) {
+        ROSTER_FILE= rosterFileText;
+    }
+
 
     @Override
     public Student addStudent(String studentId, Student student)
